@@ -40,7 +40,7 @@ const nextConfig: NextConfig = {
     // WebP = good compression, broad browser support
     //
     // RECOMMENDATION: Use only WebP to reduce transformations by ~50%
-    // formats: ["image/webp"],
+    formats: ["image/avif", "image/webp"],
 
     // ============================================
     // DEVICE SIZES (for responsive images)
