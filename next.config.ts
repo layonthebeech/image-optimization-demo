@@ -114,7 +114,7 @@ const nextConfig: NextConfig = {
     // DEFAULT: 60 (seconds)
     // How long to cache optimized images in memory
     // Note: CDN cache TTL is separate (max 31 days on Vercel)
-    minimumCacheTTL: 7200,
+    minimumCacheTTL: 3000,
 
     // ============================================
     // DANGEROUS: Allow SVG (disabled by default)
