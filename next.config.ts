@@ -84,6 +84,11 @@ const nextConfig: NextConfig = {
         protocol: "https",
         hostname: "picsum.photos",
       },
+      // Vercel Blob storage
+      {
+        protocol: "https",
+        hostname: "*.public.blob.vercel-storage.com",
+      },
       // Example: AWS S3 bucket pattern
       // {
       //   protocol: 'https',
