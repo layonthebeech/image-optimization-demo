@@ -5,30 +5,30 @@ const nextConfig: NextConfig = {
   // CUSTOM HEADERS
   // ============================================
   // Set Cache-Control headers for different image types
-  async headers() {
-    return [
-      // Static images in /public folder
-      {
-        source: "/:path*.(jpg|jpeg|png|gif|webp|avif|ico|svg)",
-        headers: [
-          {
-            key: "Cache-Control",
-            value: "public, max-age=60, must-revalidate", // 60 seconds
-          },
-        ],
-      },
-      // Next.js optimized images (/_next/image)
-      {
-        source: "/_next/image",
-        headers: [
-          {
-            key: "Cache-Control",
-            value: "public, max-age=60, must-revalidate", // 60 seconds
-          },
-        ],
-      },
-    ];
-  },
+  // async headers() {
+  //   return [
+  //     // Static images in /public folder
+  //     {
+  //       source: "/:path*.(jpg|jpeg|png|gif|webp|avif|ico|svg)",
+  //       headers: [
+  //         {
+  //           key: "Cache-Control",
+  //           value: "public, max-age=60, must-revalidate", // 60 seconds
+  //         },
+  //       ],
+  //     },
+  //     // Next.js optimized images (/_next/image)
+  //     {
+  //       source: "/_next/image",
+  //       headers: [
+  //         {
+  //           key: "Cache-Control",
+  //           value: "public, max-age=60, must-revalidate", // 60 seconds
+  //         },
+  //       ],
+  //     },
+  //   ];
+  // },
 
   images: {
     // ============================================
@@ -40,7 +40,7 @@ const nextConfig: NextConfig = {
     // WebP = good compression, broad browser support
     //
     // RECOMMENDATION: Use only WebP to reduce transformations by ~50%
-    formats: ["image/avif", "image/webp"],
+    // formats: ["image/avif", "image/webp"],
 
     // ============================================
     // DEVICE SIZES (for responsive images)
@@ -89,17 +89,24 @@ const nextConfig: NextConfig = {
         protocol: "https",
         hostname: "*.public.blob.vercel-storage.com",
       },
-      // Example: AWS S3 bucket pattern
-      // {
-      //   protocol: 'https',
-      //   hostname: '*.s3.amazonaws.com',
-      // },
-      // Example: Notion's AWS hosting
-      // {
-      //   protocol: 'https',
-      //   hostname: 's3.us-west-2.amazonaws.com',
-      //   pathname: '/secure.notion-static.com/**',
-      // },
+      // Local "upstream" API (simulates S3)
+      {
+        protocol: "http",
+        hostname: "localhost",
+        port: "3000",
+        pathname: "/api/images/**",
+      },
+      // Notion's AWS S3 hosting
+      {
+        protocol: "https",
+        hostname: "s3-us-west-2.amazonaws.com",
+        pathname: "/public.notion-static.com/**",
+      },
+      {
+        protocol: "https",
+        hostname: "s3-us-west-2.amazonaws.com",
+        pathname: "/secure.notion-static.com/**",
+      },
     ],
 
     // ============================================
@@ -115,7 +122,7 @@ const nextConfig: NextConfig = {
     // DEFAULT: 60 (seconds)
     // How long to cache optimized images in memory
     // Note: CDN cache TTL is separate (max 31 days on Vercel)
-    minimumCacheTTL: 30,
+    minimumCacheTTL: 60,
 
     // ============================================
     // DANGEROUS: Allow SVG (disabled by default)
