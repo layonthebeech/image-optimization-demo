@@ -5,30 +5,22 @@ const nextConfig: NextConfig = {
   // CUSTOM HEADERS
   // ============================================
   // Set Cache-Control headers for different image types
-  // async headers() {
-  //   return [
-  //     // Static images in /public folder
-  //     {
-  //       source: "/:path*.(jpg|jpeg|png|gif|webp|avif|ico|svg)",
-  //       headers: [
-  //         {
-  //           key: "Cache-Control",
-  //           value: "public, max-age=60, must-revalidate", // 60 seconds
-  //         },
-  //       ],
-  //     },
-  //     // Next.js optimized images (/_next/image)
-  //     {
-  //       source: "/_next/image",
-  //       headers: [
-  //         {
-  //           key: "Cache-Control",
-  //           value: "public, max-age=60, must-revalidate", // 60 seconds
-  //         },
-  //       ],
-  //     },
-  //   ];
-  // },
+  async headers() {
+    return [
+      // Next.js optimized images (/_next/image)
+      // This OVERRIDES the default cache behavior for all optimized images
+      {
+        source: "/_next/image",
+        headers: [
+          {
+            key: "Cache-Control",
+            // s-maxage controls CDN cache, max-age controls browser cache
+            value: "public, max-age=60, must-revalidate",
+          },
+        ],
+      },
+    ];
+  },
 
   images: {
     // ============================================
